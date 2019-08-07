@@ -1,8 +1,6 @@
 package jns.truen_plugari;
 
 import java.util.List;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -16,8 +14,8 @@ public class SunIsDeadlyLaser {
 		world = currentWorld;
 	}
 	
-	public List<Player> update() {
-		List<Player> playerList = (List<Player>) Bukkit.getServer().getOnlinePlayers();
+	public List<Player> updateCall() {
+		List<Player> playerList = world.getPlayers();
 		for (Player player : playerList) {
 			if (ifPlayerIsExposed(player)) {
 				hurtPlayer(player);
@@ -27,25 +25,14 @@ public class SunIsDeadlyLaser {
 	}
 	
 	private boolean ifPlayerIsExposed(Player player) {
-		Block blockBelowPlayer = getBlockBelowPlayer(player);
-		if (((int) blockBelowPlayer.getLightFromSky()) > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	private Block getBlockBelowPlayer(Player player) {
-		int checkLimit = 5;
-		Location loc;
-		Block blockBelowPlayer;
-		for (int i = 0; i < checkLimit; i++) {
-			loc = player.getLocation();
-			blockBelowPlayer = world.getBlockAt(loc.getBlockX(), (loc.getBlockY() - i), loc.getBlockZ());
-			if (blockBelowPlayer instanceof Block) {
-				return blockBelowPlayer;
+		Location loc = player.getLocation();
+		Block blockAtFeet = world.getBlockAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+		if (blockAtFeet instanceof Block) {
+			if (((int) blockAtFeet.getLightFromSky()) > 9) {
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 	
 	private void hurtPlayer(Player player) {
