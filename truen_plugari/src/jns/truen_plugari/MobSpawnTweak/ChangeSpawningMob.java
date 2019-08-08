@@ -4,6 +4,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.world.PortalCreateEvent.CreateReason;
 
 public class ChangeSpawningMob {
 	
@@ -28,5 +29,11 @@ public class ChangeSpawningMob {
 	
 	private void tweakZombie(Creature creature) {
 		double baseMovSpeed = creature.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
+		baseMovSpeed = baseMovSpeed * generalMovSpeedMult;
+		creature.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(baseMovSpeed);
+		
+		double baseArmor = creature.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
+		baseArmor = baseArmor * generalArmorMult;
+		creature.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(baseArmor);
 	}
 }

@@ -2,6 +2,7 @@ package jns.truen_plugari.MobSpawnTweak;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Creature;
 import org.bukkit.inventory.ItemStack;
 
 public class EquipmentManager {
@@ -14,6 +15,17 @@ public class EquipmentManager {
 		
 		public ZombieEquipment() {
 
+		}
+		
+		public void suitUpZombie(Creature creature) {
+			creature.getEquipment().setItemInMainHand(getZombieSword());
+			creature.getEquipment().setItemInMainHandDropChance(0.0f);
+			
+			creature.getEquipment().setArmorContents(getZombieArmor());
+			creature.getEquipment().setBootsDropChance(0.0f);
+			creature.getEquipment().setLeggingsDropChance(0.0f);
+			creature.getEquipment().setChestplateDropChance(0.0f);
+			creature.getEquipment().setHelmetDropChance(0.0f);
 		}
 		
 		private ItemStack getZombieSword() {
@@ -39,6 +51,16 @@ public class EquipmentManager {
 	}
 	
 	static class SkeletonEquipment {
+		
+		public SkeletonEquipment() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		public void suitUpSkeleton(Creature creature) {
+			creature.getEquipment().setItemInMainHand(getSkeleBow());
+			creature.getEquipment().setItemInMainHandDropChance(0.0f);
+		}
+		
 		private ItemStack getSkeleBow() {
 			ItemStack sBow = new ItemStack(Material.BOW);
 			sBow.addEnchantment(Enchantment.ARROW_DAMAGE, 3);
